@@ -17,6 +17,14 @@ $(function(){
               
         ]
     });
+    $('.reviews__slider--body').slick({
+        slidesToShow: 1,
+        centerMode: true,
+        arrows: false,
+        centerPadding: "0px",
+        dots: true,
+
+    });
 
 
     let namePage = $('body').data('name-page');
