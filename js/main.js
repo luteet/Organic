@@ -1,5 +1,24 @@
 $(function(){
 
+    $('.sponsors__slider--body').slick({
+        infinite: true,
+        slidesToShow: 5,
+        arrows: false,
+        dots: true,
+        slidesToScroll: 2,
+        responsive: [
+            {
+                breakpoint: 900,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                }
+              },
+              
+        ]
+    });
+
+
     let namePage = $('body').data('name-page');
 
     $.each($('[data-name-page=' + namePage + ']'), function() {
@@ -11,6 +30,10 @@ $(function(){
     $('.nav__burger').on('click', function() {
         $('.nav__burger, .nav__list').toggleClass('active');
         $('body').toggleClass('lock');
+    });
+
+    $('.img-lock').on('dragstart', function(e) { e.preventDefault(); }).contextmenu(function() {
+        return false;
     });
 
     $(window).resize(function() {
