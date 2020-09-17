@@ -44,6 +44,8 @@ $(function(){
         return false;
     });
 
+    
+
     $(window).resize(function() {
         if($(this).width() > 900) {
             $('.nav__burger, .nav__list').removeClass('active');
