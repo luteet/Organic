@@ -43,8 +43,24 @@ $(function(){
     $('.img-lock').on('dragstart', function(e) { e.preventDefault(); }).contextmenu(function() {
         return false;
     });
-
-    
+    let lengthBlogItem = 0;
+    $('.blog__list--btn').on('click', function() {
+        if($('.blog__list--item.hide').length > 0) {
+            $.each($('.blog__list--item.hide'), function() {
+                if(lengthBlogItem <= 3) {
+                    lengthBlogItem++;
+                    $(this).removeClass('hide');
+                }
+                
+            });
+        }
+        if($('.blog__list--item.hide').length == 0) {
+            $(this).addClass('none');
+        }
+        
+        /* $('blog__list--item hide').; */
+        lengthBlogItem = 0;
+    });
 
     $(window).resize(function() {
         if($(this).width() > 900) {
