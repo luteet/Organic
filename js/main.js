@@ -6,6 +6,7 @@ $(function(){
         arrows: false,
         dots: true,
         slidesToScroll: 2,
+        adaptiveHeight: true,
         responsive: [
             {
                 breakpoint: 900,
@@ -25,7 +26,6 @@ $(function(){
         dots: true,
 
     });
-
 
     let namePage = $('body').data('name-page');
 
