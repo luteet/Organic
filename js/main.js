@@ -1,5 +1,7 @@
 $(function(){
 
+    // ==========================  Слайдери  ==========================
+
     $('.sponsors__slider--body').slick({
         infinite: true,
         slidesToShow: 5,
@@ -27,22 +29,42 @@ $(function(){
 
     });
 
-    let namePage = $('body').data('name-page');
+    // ==========================  /Слайдери  ==========================
 
+
+    // ==========================  Название страницы (нужно для ниж. подчоркевание в меню)  ==========================
+
+    let namePage = $('body').data('name-page');
     $.each($('[data-name-page=' + namePage + ']'), function() {
         if(!$(this).is('body')) {
             $(this).addClass('active');
         }
     })
 
+    // ==========================  /Название страницы (нужно для ниж. подчоркевание в меню)  ==========================
+
+
+    // ==========================  Бургер  ==========================
+
     $('.nav__burger').on('click', function() {
         $('.nav__burger, .nav__list').toggleClass('active');
         $('body').toggleClass('lock');
     });
 
+    // ==========================  /Бургер  ==========================
+
+
+    // ==========================  Блокиратор картинок  ==========================
+
     $('.img-lock').on('dragstart', function(e) { e.preventDefault(); }).contextmenu(function() {
         return false;
     });
+
+    // ==========================  /Блокиратор картинок  ==========================
+
+
+    // ==========================  Подгрузка блоков (кнопка "загрузить ещё")  ==========================
+
     let lengthBlogItem = 0;
     $('.blog__list--btn').on('click', function() {
         if($('.blog__list--item.hide').length > 0) {
@@ -51,29 +73,24 @@ $(function(){
                     lengthBlogItem++;
                     $(this).removeClass('hide');
                 }
-                
             });
         }
         if($('.blog__list--item.hide').length == 0) {
             $(this).addClass('none');
         }
         
-        /* $('blog__list--item hide').; */
         lengthBlogItem = 0;
     });
+
+    // ==========================  /Подгрузка блоков (кнопка "загрузить ещё")  ==========================
+    
+
+    // ==========================  Медиа запроси  ==========================
+
     function customeMediaEvent() {
         if($(this).width() > 900) {
             $('.nav__burger, .nav__list').removeClass('active');
             $('body').removeClass('lock');
-            /* $('.start__image--elem img, .section-bg__item img').on('load', function(){
-                $(this).removeClass('loading').addClass('loaded'); 
-            }); */
-            /* $('.start__image--elem img, .section-bg__item img').on('load', function(){
-                if($(this).hasClass('loading')) {
-                    $(this).removeClass('loading').addClass('loaded');
-                }
-                
-            }); */
         }
     }
     customeMediaEvent()
@@ -83,30 +100,13 @@ $(function(){
         }
     })
 
-    function hHeader(settings) {
-        
-        if (settings == undefined) {
-            return false;
-        }
-    
-        if (settings.elemName == undefined) {
-            return false;
-        }
-    
-        if (settings.distance == undefined) {
-            settings.distance = 500;
-        }
-    
-        if (settings.fade == undefined) {
-            settings.fade = false;
-        }
-    
-        if (settings.speedAnim == undefined) {
-            settings.speedAnim = 200;
-        }
+    // ==========================  /Медиа запроси  ==========================
 
-    
-    
+
+    // ==========================  Скривание шапки при скроле  ==========================
+
+    function hHeader(settings) {
+
         let header = settings.elemName,
             distance = settings.distance,
             scrollPrev = 0, ifHeaderTopClass, ifHeaderTopDistance,
@@ -118,77 +118,38 @@ $(function(){
             scrollTop = 0,
             scrollTopCheck = false,
             scrollToTop = false,
-            scrollToDown = false,
-            classAnchor = settings.classAnchor, classAnchorForTop = settings.classAnchorForTop;
+            scrollToDown = false;
             
 
-            
-        
-        if(typeof distanceHide == 'number') {
             scrollDown = distanceHide;
-        }        
 
-        if(settings.ifHeaderTop != undefined) {
             ifHeaderTopClass = settings.ifHeaderTop[0];
-            ifHeaderTopDistance = settings.ifHeaderTop[1];
-        }
-        
+            ifHeaderTopDistance = settings.ifHeaderTop[1];        
 
         function ifHeaderTop() {
-            if(scrolled <= ifHeaderTopDistance && typeof ifHeaderTopClass == 'string') {
+            if(scrolled <= ifHeaderTopDistance) {
                 $(header).addClass(ifHeaderTopClass);
-                if(classAnchorForTop == true) {
-                    $(header).addClass($('[data-hh-anchor]').data('hh-anchor'));
-                    $.each($('[data-hh-anchor]'), function() {                            
-                        $(this).addClass($('[data-hh-anchor]').data('hh-anchor'));
-                    })
-                }
             }
-            else if (scrolled > ifHeaderTopDistance && typeof ifHeaderTopClass == 'string') {
+            else if (scrolled > ifHeaderTopDistance) {
                 $(header).removeClass(ifHeaderTopClass);
-                if(classAnchorForTop == true) {
-                    $.each($('[data-hh-anchor]'), function() {                            
-                        $(this).removeClass($('[data-hh-anchor]').data('hh-anchor'));
-                    })
-                }
             }
         }
-        if(typeof ifHeaderTopClass == 'string') {
-            ifHeaderTop();
-        }
+
+        ifHeaderTop();
 
         $(window).scroll(function () {
             scrolled = $(window).scrollTop();          
             if (scrolled == 0) {
-                if (settings.classToHide == undefined) {
-                    if (settings.fade == true) {
-                        $(header).fadeIn(settings.speedAnim);
-                    }
-                    else if (settings.fade == false) {
-                        $(header).slideDown(settings.speedAnim);
-                    }
-                    
-                }
-                else {
-                    $(header).removeClass(settings.classToHide);
-                }
+                $(header).removeClass(settings.classToHide);
                 scrollTopCheck = true;
             }
-            
-            if(typeof ifHeaderTopClass == 'string') {
-                ifHeaderTop();
-            }
+
+            ifHeaderTop();
     
             if (scrolled > 100 && scrolled > scrollPrev) {
                 if (scrollToDown == false) {
                     scrollToTop = false;
-                    
-                    if(typeof distanceHide == 'number') {
-                        scrollDown = scrolled + distanceHide;
-                    }
-                    else {
-                        scrollDown = scrolled + distance;
-                    }
+                    scrollDown = scrolled + distanceHide;
                     scrollDownCheck = false;
                     scrollToDown = true;
                 }
@@ -196,12 +157,7 @@ $(function(){
             } else if (scrollToTop == false) {
                 
                     scrollToDown = false;
-                    if(typeof distanceShow == 'number') {
-                        scrollTop = scrolled - distanceShow;
-                    }
-                    else {
-                        scrollTop = scrolled - distance;
-                    }
+                    scrollTop = scrolled - distanceShow;
                     scrollTopCheck = false;
                     scrollToTop = true;
                 }
@@ -209,73 +165,16 @@ $(function(){
             scrollPrev = scrolled;
             if (scrolled >= scrollDown && scrollDownCheck == false) {
                 // hide elem
-                
-                if (settings.classToHide == undefined) {
-                    if (settings.fade == true) {
-                        $(header).fadeOut(settings.speedAnim);
-                    }
-                    else if (settings.fade == false) {
-                        $(header).slideUp(settings.speedAnim);
-                    }
-                    if(classAnchor == true) {
-                        $.each($('[data-hh-anchor]'), function() {                            
-                            $(this).addClass($('[data-hh-anchor]').data('hh-anchor'));
-                        })
-                    }
-                }
-                else {
-                    $(header).addClass(settings.classToHide);
-                    if(classAnchor == true) {
-                        $.each($('[data-hh-anchor]'), function() {                            
-                            $(this).addClass($('[data-hh-anchor]').data('hh-anchor'));
-                        })
-                    }
-                }
+                $(header).addClass(settings.classToHide);
                 scrollDownCheck = true;
             }
             if (scrollTop >= scrolled && scrollTopCheck == false) {
                 // show elem
-                if (settings.classToHide == undefined) {
-                    if (settings.fade == true) {
-                        $(header).fadeIn(settings.speedAnim);
-                    }
-                    else if (settings.fade == false) {
-                        $(header).slideDown(settings.speedAnim);
-                    }
-                    if(classAnchor == true) {
-                        $.each($('[data-hh-anchor]'), function() {                            
-                            $(this).removeClass($('[data-hh-anchor]').data('hh-anchor'));
-                        })
-                    }
-                }
-                else {
-                    $(header).removeClass(settings.classToHide);
-                    if(classAnchor == true) {
-                        $.each($('[data-hh-anchor]'), function() {                            
-                            $(this).removeClass($('[data-hh-anchor]').data('hh-anchor'));
-                        })
-                    }
-                }
+                $(header).removeClass(settings.classToHide);
                 scrollTopCheck = true;
             }
         });
     }
-    /* $('.header__logo--link img').on('load', function() {
-        console.log('loaded');
-        $.each($('.start__image--elem img, .section-bg__item img'), function() {
-            $(this).addClass('loading');
-        });
-    }); */
-
-    $(".start__image--elem img, .section-bg__item img").on('load', function () {
-        $(this).addClass('loaded');
-        return false;
-    }).each(function(){
-        if (this.complete){
-            $(this).trigger('load');
-        }
-    });
-    
     
     hHeader({
         elemName: $('.header'),
@@ -286,10 +185,27 @@ $(function(){
         classAnchorForTop: true,
     });
 
+    // ==========================  /Скривание шапки при скроле  ==========================
+
+
+    // ==========================  Плавная загрузка картинок  ==========================
+
+    $(".start__image--elem img, .section-bg__item img").on('load', function () {
+        $(this).addClass('loaded');
+        return false;
+    }).each(function(){
+        if (this.complete){
+            $(this).trigger('load');
+        }
+    });
+
+    // ==========================  /Плавная загрузка картинок  ==========================
+
+
+    // ==========================  Анимация при скроле  ==========================
+
     AOS.init();
 
-    
-    
-    //start__image--elem
+    // ==========================  /Анимация при скроле  ==========================
 
 });
